@@ -27,6 +27,9 @@ Thumbs.db
 # Sass cache files
 .sass-cache
 
+# Codekit Files
+*/codekit-config.json
+
 # Sublime Files
 *.sublime-project
 *.sublime-workspace
