@@ -1,0 +1,11 @@
+--ignore-dir=vendor/bundle
+--type-add=ruby=.erb,.haml
+--type-add=html=.html.erb,.html.haml
+--type-add=js=js.erb,.coffee
+--type-add=css=.scss,.sass
+--type-add=csv=.csv
+
+--sort-files
+--color
+--follow
+--group
