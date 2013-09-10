@@ -42,6 +42,11 @@ alias mate='subl -w'
 # Look up IP
 alias myip='ifconfig|grep -A 4 "en0"|grep "inet "'
 
+# ==== Rbenv ====
+function rbenv_version() {
+  rbenv version 2> /dev/null | sed 's/\([^ ]*\).*/(\1)/'
+}
+
 
 # Git
 # ---------------------------------------------------
@@ -61,9 +66,6 @@ alias seturl="git remote set-url"
 # new remote
 alias newremote="git remote add"
 
-# change user email config
-alias github='git config user.email "jessica.avison@gmail.com"'
-
 # Prompt with git branch
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
@@ -73,10 +75,6 @@ BLACK="\[\033[0;30m\]"
 OFF="\[\033[0m\]"
 
 source ~/.git-prompt.sh
-
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
-fi
 
 
 # Nginx
@@ -89,7 +87,8 @@ alias find_nginx='ps aux | grep nginx | grep master'
 
 # Command Line 
 # ---------------------------------------------------
-export PS1="$RED\$(~/.rvm/bin/rvm-prompt) $GREEN\w$YELLOW\$(__git_ps1 "[%s]")$OFF \$ "
+export PS1="$RED\$(rbenv_version)\[\033[0m\] $GREEN\w$YELLOW\$(__git_ps1 "[%s]")$OFF \$ "
+
 
 
 # RVM
