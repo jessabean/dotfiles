@@ -54,6 +54,9 @@ function rbenv_version() {
 # Git Completion
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
+# Show colors
+alias ls="ls -G"
+
 # New Branch
 alias newbranch="git co -b"
 
