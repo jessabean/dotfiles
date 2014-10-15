@@ -1,103 +1,83 @@
-# Aliases 
-# ---------------------------------------------------
-
-# Easier navigation
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-
-# Shortcuts
-alias drp="cd ~/Documents/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias p="cd ~/Projects"
-alias g="git"
-alias h="history"
-alias j="jobs"
-alias v="vim"
-alias o="open"
-alias oo="open ."
-alias c="clear"
-
-# When the internet goes down
-alias fixinternet="sudo ifconfig en0 down; sudo ifconfig en0 up"
-# Look Up Public Key
-alias publickey="cat ~/.ssh/id_rsa.pub"
-# Open SSH Config
-alias sshconfig="subl ~/.ssh/config"
-# Open Bash Profile
-alias bashprofile="subl ~/.bash_profile"
-# Save Bash Profile
-alias rebash="source ~/.bash_profile"
-# Open Hosts File
-alias hosts="subl /etc/hosts"
-# Open Git Config
-alias gitconfig="subl ~/.gitconfig"
 # Open files in Sublime Text by Default
 export EDITOR='subl -w'
+
+# Aliases
+# ---------------------------------------------------
+
 # Map Textmate command to Sublime because I can't stop doing it
-alias mate='subl -w'
+alias mate='subl'
+
+# Open SSH config
+alias sshconfig="subl ~/.ssh/config"
+
+# Open bashprofile
+alias bashprofile="subl ~/.bash_profile"
+
+# Save bashprofile
+alias rebash="source ~/.bash_profile"
+
+# Open hosts file
+alias hosts="subl /etc/hosts"
+
+# Open gitconfig
+alias gitconfig="subl ~/.gitconfig"
 
 # Look up IP
 alias myip='ifconfig|grep -A 4 "en0"|grep "inet "'
 
-# ==== Rbenv ====
-function rbenv_version() {
-  rbenv version 2> /dev/null | sed 's/\([^ ]*\).*/(\1)/'
-}
+# Look up public key
+alias publickey="cat ~/.ssh/id_rsa.pub"
 
+# Flush memcached
+alias flush='echo "flush_all" | nc 127.0.0.1 11211'
+
+# Bundle exec
+alias be="bundle exec"
 
 # Git
 # ---------------------------------------------------
 
-# Git Completion
-source /usr/local/etc/bash_completion.d/git-completion.bash
-
-# New Branch
+# New branch
 alias newbranch="git co -b"
 
-# Delete Branch
+# Delete branch
 alias deletebranch="git branch -D"
 
-# Set Remote URL
+# Set remote URL
 alias seturl="git remote set-url"
 
-# new remote
+# New remote
 alias newremote="git remote add"
 
-# Prompt with git branch
+# Functions
+# ---------------------------------------------------
+
+# Start an HTTP server from a directory, optionally specifying the port (via Dave Mosher)
+function server() {
+  local port="${1:-8000}"
+  open "http://localhost:${port}/"
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+function rbenv_version() {
+  rbenv version 2> /dev/null | sed 's/\([^ ]*\).*/(\1)/'
+}
+
+# Customizing Terminal
+# ---------------------------------------------------
+source ~/.git-prompt.sh
+
+# Colors
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
 GREEN="\[\033[0;32m\]"
+CYAN="\[\033[0;36m\]"
+MAGENTA="\[\033[0;35m\]"
 WHITE="\[\033[1;37m\]"
 BLACK="\[\033[0;30m\]"
 OFF="\[\033[0m\]"
 
-source ~/.git-prompt.sh
-
-
-# Nginx
-# ---------------------------------------------------
-
-alias restart_nginx='launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist && launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.nginx.plist;'
-
-alias find_nginx='ps aux | grep nginx | grep master'
-
-
-# Command Line 
-# ---------------------------------------------------
+# Bash prompt
 export PS1="$RED\$(rbenv_version)\[\033[0m\] $GREEN\w$YELLOW\$(__git_ps1 "[%s]")$OFF \$ "
-
-
-
-# RVM
-# ---------------------------------------------------
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
-
-
-# Homebrew paths
-# ---------------------------------------------------
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
-
-export CC=/usr/local/bin/gcc-4.2
