@@ -1,19 +1,23 @@
 [user]
 	name = jessabean
-	email = jessica.avison@gmail.com
+	email = jess@eldredge.io
 [alias]
-	co = checkout
-	ci = commit
-	br = branch
-	df = diff
-	st = status
-	x = log --graph --pretty=format:'%an: %s - %Cred%h%Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-	lol = log --pretty=oneline --abbrev-commit --graph --decorate
-	track = !git-track
+  co = checkout
+  ci = commit
+  br = branch
+  df = diff
+  st = status
+  x = log --graph --pretty=format:'%an: %s - %Cred%h%Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lol = log --pretty=oneline --abbrev-commit --graph --decorate
+  track = !git-track
+  merged = !git branch --merged main
 
 [core]
   excludesfile = ~/.gitignore
-	
+
+[push]
+  default = current
+
 [color]
   [color]
     branch = auto
@@ -22,15 +26,24 @@
     interactive = auto
     ui = auto
   [color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+    current = magenta reverse
+    local = green
+    remote = blue
   [color "diff"]
     meta = yellow bold
     frag = magenta bold
     old = red bold
     new = green bold
   [color "status"]
-    added = yellow
-    changed = green
+    added = green
+    changed = yellow
     untracked = cyan
+[pager]
+	branch = false
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[init]
+	defaultBranch = main
